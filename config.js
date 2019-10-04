@@ -12,6 +12,10 @@ module.exports = {
   // Preferred port
   port: process.env.PORT || 3000,
 
+  get dbUri() {
+    return `mongodb+srv://${this.dbUsername}:${this.dbPassword}@cluster0-aw8la.mongodb.net/${this.dbName}?retryWrites=true&w=majority`;
+  },
+
   checkEnvVariables: () => {
     ENV_VARS.forEach(key => {
       if (!process.env[key]) {
