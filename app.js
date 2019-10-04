@@ -75,8 +75,12 @@ config.checkEnvVariables();
 mongoose
   .connect(config.dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    const listener = app.listen(config.port, () => {
-      console.log("Your app is listening on port " + listener.address().port);
+    const server = app.listen(config.port, () => {
+      console.log("Your app is listening on port " + server.address().port);
+    });
+    const io = require("./socket").init(server);
+    io.on("connection", socket => {
+      console.log("Client connected");
     });
   })
   .catch(err => console.log(err));
